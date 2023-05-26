@@ -18,6 +18,32 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    // console.log('App componentDidMount');
+
+    const contacts = localStorage.getItem('contacts');
+    const paresdContacts = JSON.parse(contacts);
+
+    if (paresdContacts) {
+      this.setState({ contacts: paresdContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // console.log('App componentDidUpdate');
+
+    const nextContacts = this.state.contacts;
+    const prevContacts = prevState.contacts;
+
+    if (prevContacts !== nextContacts) {
+      console.log(
+        'Оновилось поле contacts, записую contacts в локальне сховище'
+      );
+
+      localStorage.setItem('contacts', JSON.stringify(nextContacts));
+    }
+  }
+
   addContact = ({ name, number }) => {
     const isExist = this.state.contacts.find(contact => contact.name === name);
 
@@ -52,6 +78,8 @@ class App extends Component {
   };
 
   render() {
+    console.log('App render');
+
     const { filter } = this.state;
     const visibleContacts = this.getVisibleContacts();
 
