@@ -45,7 +45,9 @@ class App extends Component {
   }
 
   addContact = ({ name, number }) => {
-    const isExist = this.state.contacts.find(contact => contact.name === name);
+    const isExist = this.state.contacts.find(
+      contact => contact.name.toLowerCase() === name.toLowerCase()
+    );
 
     if (isExist) {
       Notify.failure(`${name} is already in contacts`);
